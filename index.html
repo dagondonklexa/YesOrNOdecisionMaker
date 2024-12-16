@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YES or NO decision maker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body{
+      font-family: 'Press Start 2P';
+      text-align: center ;
+      background-color: rgb(255, 255, 255);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 0;
+      height: 100vh;
+      margin: 0;
+    }
+    button{
+      background-color: blueviolet;
+      border: none;
+      border-radius: 5px;
+      cursor:  pointer;
+      font-size: 2rem;
+      margin-top: 20px;
+      padding:  10px 20px;
+    }
+    h1
+    {
+      font-size: 2rem;
+      height: 10vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    div{
+      height: 50vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+    img{
+      width: 50%;
+      height: 70%;
+    }
+    #imageContainer{
+      width: 100%;
+      height: 95%;
+    }
+  </style>
+</head>
+<body>
+  <h1> YES or No Decision Maker</h1>
+  <div id="decision">
+
+  </div>
+  <button id="refresh-btn">Press me</button>
+  <script>
+       function fetchDecision() {
+        fetch('https://yesno.wtf/api')
+        .then(response => response.json())
+        .then( data => {
+          const { answer, image } = data;
+
+          document.getElementById('decision').innerHTML = `
+          <h2>${answer.toUpperCase()}</h2><div id=imageContainer> 
+          <img src="${image}" alt="Decision is ${answer}"></div>
+          `;
+        })
+        .catch(error => console.error('Error fetching data:',error));
+        
+       }
+        fetchDecision();
+
+        document.getElementById('refresh-btn').addEventListener('click', fetchDecision);
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
